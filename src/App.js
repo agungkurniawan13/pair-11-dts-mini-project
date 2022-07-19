@@ -15,6 +15,9 @@ import PageHome from './Page/PageHome';
 import { auth } from './Config/firebase'
 import { onAuthStateChanged } from "firebase/auth";
 
+import {ThemeProvider} from '@mui/material';
+import theme from './themes/theme';
+
 function ProtectedRoute({ children, isBypas = false }) {
   let location = useLocation();
   const [view, setView] = useState(<div>loading</div>)
@@ -42,23 +45,25 @@ function ProtectedRoute({ children, isBypas = false }) {
 
 function App() {
   return (
-    <div >
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={
-            <ProtectedRoute isBypas={false} >
-              <PageHome />
-            </ProtectedRoute>
-          } />
-          <Route path="login" element={
-            <PageLogin />
-          } />
-          <Route path="register" element={
-            <PageRegister />
-          } />
-        </Routes>
-      </BrowserRouter>
-    </div>
+    <ThemeProvider theme={theme}>
+      <div className='App'>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={
+              <ProtectedRoute isBypas={false} >
+                <PageHome />
+              </ProtectedRoute>
+            } />
+            <Route path="login" element={
+              <PageLogin />
+            } />
+            <Route path="register" element={
+              <PageRegister />
+            } />
+          </Routes>
+        </BrowserRouter>
+      </div>
+    </ThemeProvider>
   );
 }
 
